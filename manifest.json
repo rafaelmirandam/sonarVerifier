@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "name": "capco",
+    "description": "Sonar Verifier",
+    "version":"1.0.0",
+    "icons": {
+        "128": "sonar128.png"
+    },
+    "browser_action": {
+        "default_icon": "sonar19.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": ["activeTab"]
+}
