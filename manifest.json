@@ -3,6 +3,10 @@
     "name": "capco",
     "description": "Sonar Verifier",
     "version":"1.0.0",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
     "icons": {
         "128": "sonar128.png"
     },
