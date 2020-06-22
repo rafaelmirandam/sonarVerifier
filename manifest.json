@@ -14,5 +14,5 @@
         "default_icon": "sonar19.png",
         "default_popup": "popup.html"
     },
-    "permissions": ["activeTab"]
+    "permissions": ["activeTab","declarativeContent"]
 }
