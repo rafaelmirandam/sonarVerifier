@@ -2,15 +2,28 @@
 var fromBranch = document.getElementsByClassName('branch-name')[0].innerText;
 var toBranch = document.getElementsByClassName('branch-name')[1].innerText;
 var auth = 'Basic ' + btoa("m190498@corpr.bradesco.com.br:Cap@0805");
-var request = new XMLHttpRequest();
-console.log(auth);
-request.open('GET', 'http://192.168.45.73:9000/api/issues/search?id=next-platform%3Afeature%2Fcap%2FBG-NEXT2-22616', true);
-request.setRequestHeader('Authorization', auth);
-request.responseType = "json";
-request.send();
-request.onload = () => {
-    alert(request.response);
-}
-var response = JSON.parse(request.response);
-console.log(response);
-console.log(request.response);
+var issues = [];
+var final;
+
+var xhr = new XMLHttpRequest();
+
+callSonar(fromBranch);
+callSonar(toBranch);
+
+function callback() {
+    if(xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+            result = xhr.responseText;
+            issues.push(JSON.parse(result))
+        }
+    }
+};
+
+function callSonar(branch) {
+    xhr.open("GET", "http://192.168.45.73:9000/api/issues/search?id=next-platform:"+branch, true);
+    xhr.setRequestHeader('Authorization', auth);
+    xhr.setRequestHeader('Content-Type','application/json')
+    xhr.setRequestHeader('dataType', 'jsonp')
+    xhr.onreadystatechange = callback;
+    xhr.send();
+};
