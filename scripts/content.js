@@ -4,12 +4,11 @@ var toBranch = document.getElementsByClassName('branch-name')[1].innerText;
 var auth = 'Basic ' + btoa("m190498@corpr.bradesco.com.br:Cap@0805");
 var issues = [];
 var project = getProject(url);
-var html = ""
 
 callSonar(fromBranch);
 callSonar(toBranch);
 
-console.log(issues[0]+"-"+issues[1]);
+//console.log(issues[0]+"-"+issues[1]);
 
 
 var result = issues[0]-issues[1];
@@ -48,20 +47,30 @@ function getProject(url){
 </div>
 */
 
+//ERROR aui-icon aui-icon-small build-icon aui-iconfont-error failed-build-icon  
+//APROVE aui-icon aui-icon-small build-icon aui-iconfont-approve successful-build-icon 
+
 function insertTag(issueNumber) {
+    var approve = "aui-icon aui-icon-small build-icon aui-iconfont-approve successful-build-icon";
+    var reprove = "aui-icon aui-icon-small build-icon aui-iconfont-error failed-build-icon";
     var div = document.createElement("DIV");
     div.className = "plugin-item build-status-summary";
     var a = document.createElement("A");
-    //a.href = "http://192.168.45.73:9000/dashboard?id="+project+":"+fromBranch;
     a.setAttribute("href","http://192.168.45.73:9000/dashboard?id="+project+":"+fromBranch);
     a.setAttribute('target', '_blank');
     a.className = "build-status-overview-link";
+/*     if (issueNumber == 0){
+        a.className = approve;
+    } else {
+        a.className = reprove;
+    } */
     var span = document.createElement("SPAN");
-    var text = document.createTextNode("Vc tem "+issueNumber+" issues no sonar")
+    var text = document.createTextNode(issueNumber+" issue(s) no sonar")
     span.appendChild(text);
     a.appendChild(span);
     div.appendChild(a);
-
+    console.log(div.innerHTML);
+    
     document.getElementsByClassName("plugin-section-primary")[0].appendChild(div);
     
 };
