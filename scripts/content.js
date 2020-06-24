@@ -59,14 +59,17 @@ function insertTag(issueNumber) {
     a.setAttribute("href","http://192.168.45.73:9000/dashboard?id="+project+":"+fromBranch);
     a.setAttribute('target', '_blank');
     a.className = "build-status-overview-link";
-/*     if (issueNumber == 0){
-        a.className = approve;
+    var spanIcon = document.createElement("SPAN");
+    if (issueNumber == 0){
+        spanIcon.className = approve;
     } else {
-        a.className = reprove;
-    } */
+        spanIcon.className = reprove;
+        a.setAttribute("style", "color:#E53C17");
+    }
     var span = document.createElement("SPAN");
     var text = document.createTextNode(issueNumber+" issue(s) no sonar")
     span.appendChild(text);
+    a.appendChild(spanIcon);
     a.appendChild(span);
     div.appendChild(a);
     console.log(div.innerHTML);
