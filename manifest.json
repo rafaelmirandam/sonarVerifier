@@ -12,9 +12,6 @@
     },
     "permissions": [
         "activeTab",
-        "tabs",
-        "https://*.github.com/*",
-        "http://localhost/*",
         "http://192.168.45.73:9000/*"
     ],
     "content_security_policy": "script-src 'self' http://localhost; object-src 'self' http://localhost",
@@ -25,5 +22,8 @@
           ],
           "js": ["scripts/content.js"]
         }
-    ]
+    ],
+    "background": {
+        "scripts": ["scripts/background.js"]
+    }
 }

@@ -3,23 +3,21 @@ var fromBranch = document.getElementsByClassName('branch-name')[0].innerText;
 var toBranch = document.getElementsByClassName('branch-name')[1].innerText;
 var auth = 'Basic ' + btoa("m190498@corpr.bradesco.com.br:Cap@0805");
 var issues = [];
+
 var project = getProject(url);
+console.log(project);
 
 callSonar(fromBranch);
 callSonar(toBranch);
-
-//console.log(issues[0]+"-"+issues[1]);
-
-
 var result = issues[0]-issues[1];
+console.log(issues[0]+"-"+issues[1]+"="+result);
 
-insertTag(result)
+insertTag(result);
 
 
 function callSonar(branch) {
-    console.log(branch)
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://192.168.45.73:9000/api/issues/search?id="+project+":"+branch, false);
+    xhr.open("GET", "http://192.168.45.73:9000/api/issues/search?componentKeys="+project+":"+branch, false);
     xhr.setRequestHeader('Authorization', auth);
     xhr.setRequestHeader('Content-Type','application/json')
     xhr.setRequestHeader('dataType', 'jsonp')
@@ -39,17 +37,6 @@ function getProject(url){
     return resources[4];
 };
 
-/* 
-<div class="plugin-item build-status-summary">
-   <a href="https://bamboo.prebanco.com.br/browse/CN-CORENEXT4415-2" class="build-status-overview-link" data-single-build="true">
-    <span class="aui-icon aui-icon-small aui-iconfont-build" title="Builds">Build status</span><strong class="count">1</strong> <span class="label">build</span></a>
-   <div class="item-extra-content"><a href="https://bamboo.prebanco.com.br/browse/CN-CORENEXT4415-2" class="aui-icon aui-icon-small build-icon aui-iconfont-approve successful-build-icon " data-build-status="SUCCESSFUL"></a></div>
-</div>
-*/
-
-//ERROR aui-icon aui-icon-small build-icon aui-iconfont-error failed-build-icon  
-//APROVE aui-icon aui-icon-small build-icon aui-iconfont-approve successful-build-icon 
-
 function insertTag(issueNumber) {
     var approve = "aui-icon aui-icon-small build-icon aui-iconfont-approve successful-build-icon";
     var reprove = "aui-icon aui-icon-small build-icon aui-iconfont-error failed-build-icon";
@@ -67,13 +54,11 @@ function insertTag(issueNumber) {
         a.setAttribute("style", "color:#E53C17");
     }
     var span = document.createElement("SPAN");
-    var text = document.createTextNode(issueNumber+" issue(s) no sonar")
+    var text = document.createTextNode(issueNumber+" sonarqube issue(s)")
     span.appendChild(text);
     a.appendChild(spanIcon);
     a.appendChild(span);
     div.appendChild(a);
-    console.log(div.innerHTML);
     
     document.getElementsByClassName("plugin-section-primary")[0].appendChild(div);
-    
 };
