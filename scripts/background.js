@@ -21,3 +21,8 @@ chrome.browserAction.onClicked.addListener(buttonClicked);
 function buttonClicked(tab) {
     console.log(tab)
 } */
+
+
+function alert(){
+    console.log("ola mundo");
+}
