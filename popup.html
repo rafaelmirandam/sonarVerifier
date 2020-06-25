@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Sonar Verifier</title>
+        <script type="text/javascript" src="/scripts/background.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <style>
@@ -23,7 +24,7 @@
                 margin: 0;
                 color: #2f5876;
             }
-            input[type=text], input[type=password] {
+            input[type=text], input[type=password]{
                 width: 100%;
                 padding: 12px 20px;
                 margin: 8px 0;
@@ -80,6 +81,9 @@
             </div>
             <div class="flex-container">
                 <input type="password" placeholder="Enter Password" name="psw" required>
+            </div>
+            <div class="flex-container">
+                <input type="button" value="Login" name="loginButton" onclick="alert()">
             </div>
         </div>
     </body>
