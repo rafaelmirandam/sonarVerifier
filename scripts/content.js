@@ -1,26 +1,26 @@
 var urlWithProject = window.location.pathname;
 var branch = document.getElementsByClassName('branch-name')[0].innerText;
 var auth = 'Basic bTE5MDQ5OEBjb3Jwci5icmFkZXNjby5jb20uYnI6Q2FwQDA4MDU=';
-var firstAnalisysDate = '';
 
 var project = getProject(urlWithProject);
 
-findFirstAnalisys(branch)
-findIssues(branch, firstAnalisysDate);
+findFirstAnalisys(branch);
 
 function findFirstAnalisys(branch) {
+    var firstAnalisysDate = '';
     var url = new URL("http://192.168.45.73:9000/api/project_analyses/search");
     url.searchParams.set("project", project+":"+branch);
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, false);
+    xhr.open("GET", url);
     xhr.setRequestHeader('Authorization', auth);
-    xhr.setRequestHeader('Content-Type','application/json')
-    xhr.setRequestHeader('dataType', 'jsonp')
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.setRequestHeader('crossDomain','true');
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) { 
+            console.log(xhr);            
             var response = JSON.parse(xhr.responseText);
             firstAnalisysDate = response.analyses[response.analyses.length -1].date;
-            firstAnalisysDate = firstAnalisysDate.substring(0, 10);
+            findIssues(branch, firstAnalisysDate.substring(0, 10));
         }
     }
     xhr.send();
@@ -32,10 +32,10 @@ function findIssues(branch, firstAnalisysDate) {
     url.searchParams.set("statuses", "OPEN");
     url.searchParams.set("createdAfter", firstAnalisysDate)
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, false);
+    xhr.open("GET", url);
     xhr.setRequestHeader('Authorization', auth);
-    xhr.setRequestHeader('Content-Type','application/json')
-    xhr.setRequestHeader('dataType', 'jsonp')
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.setRequestHeader('crossDomain','true');
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             insertTag(JSON.parse(xhr.responseText).total);
