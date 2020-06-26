@@ -23,6 +23,6 @@ function buttonClicked(tab) {
 } */
 
 
-function alert(){
-    console.log("ola mundo");
+function alert(str){
+    console.log(str);
 }
