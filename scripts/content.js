@@ -10,14 +10,9 @@ function findFirstAnalisys(branch) {
     var firstAnalisysDate = '';
     var url = new URL("http://192.168.45.73:9000/api/project_analyses/search");
     url.searchParams.set("project", project+":"+branch);
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.setRequestHeader('Authorization', auth);
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.setRequestHeader('crossDomain','true');
+    var xhr = createXhr(url);
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) { 
-            console.log(xhr);            
             var response = JSON.parse(xhr.responseText);
             firstAnalisysDate = response.analyses[response.analyses.length -1].date;
             findIssues(branch, firstAnalisysDate.substring(0, 10));
@@ -26,16 +21,21 @@ function findFirstAnalisys(branch) {
     xhr.send();
 }
 
+function createXhr(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.setRequestHeader('Authorization', auth);
+    xhr.setRequestHeader('Content-Type', '*/*');
+    xhr.setRequestHeader('Cache-Control', 'no-cache');
+    return xhr;
+}
+
 function findIssues(branch, firstAnalisysDate) {
     var url = new URL("http://192.168.45.73:9000/api/issues/search");
     url.searchParams.set("componentKeys", project+":"+branch);
     url.searchParams.set("statuses", "OPEN");
     url.searchParams.set("createdAfter", firstAnalisysDate)
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.setRequestHeader('Authorization', auth);
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.setRequestHeader('crossDomain','true');
+    var xhr = createXhr(url);
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             insertTag(JSON.parse(xhr.responseText).total);
