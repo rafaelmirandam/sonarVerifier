@@ -1,6 +1,6 @@
 var urlWithProject = window.location.pathname;
 var branch = document.getElementsByClassName('branch-name')[0].innerText;
-var auth = 'Basic bTE5MDQ5OEBjb3Jwci5icmFkZXNjby5jb20uYnI6Q2FwQDA4MDU=';
+var auth = 'Basic 64587930a6fec64adb8769fec2da4717217f9883';
 
 var project = getProject(urlWithProject);
 
