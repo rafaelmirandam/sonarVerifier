@@ -1,6 +1,5 @@
 var urlWithProject = window.location.pathname;
 var branch = document.getElementsByClassName('branch-name')[0].innerText;
-var auth = 'Basic 64587930a6fec64adb8769fec2da4717217f9883';
 
 var project = getProject(urlWithProject);
 
@@ -16,6 +15,8 @@ function findFirstAnalisys(branch) {
             var response = JSON.parse(xhr.responseText);
             firstAnalisysDate = response.analyses[response.analyses.length -1].date;
             findIssues(branch, firstAnalisysDate.substring(0, 10));
+        } else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
+            insertTag(null);
         }
     }
     xhr.send();
@@ -24,7 +25,6 @@ function findFirstAnalisys(branch) {
 function createXhr(url) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
-    xhr.setRequestHeader('Authorization', auth);
     xhr.setRequestHeader('Content-Type', '*/*');
     xhr.setRequestHeader('Cache-Control', 'no-cache');
     return xhr;
@@ -44,9 +44,9 @@ function findIssues(branch, firstAnalisysDate) {
     xhr.send();
 };
 
-function getProject(url){
+function getProject(url) {
     var resources = url.split("/");
-    if (resources[4] === "nextbank"){
+    if (resources[4] === "nextbank") {
         return "next-platform";
     }
     return resources[4];
@@ -55,6 +55,7 @@ function getProject(url){
 function insertTag(issueNumber) {
     var approve = "aui-icon aui-icon-small build-icon aui-iconfont-approve successful-build-icon";
     var reprove = "aui-icon aui-icon-small build-icon aui-iconfont-error failed-build-icon";
+    var info = "aui-icon aui-icon-small aui-iconfont-help";
     var div = document.createElement("DIV");
     div.className = "plugin-item build-status-summary";
     var a = document.createElement("A");
@@ -63,13 +64,18 @@ function insertTag(issueNumber) {
     a.className = "build-status-overview-link";
     var spanIcon = document.createElement("SPAN");
     var text
-    if (issueNumber == 0){
+    if (issueNumber == 0) {
         spanIcon.className = approve;
-        text = document.createTextNode("No issues on sonar, have a cookie :)")
-    } else {
+        text = document.createTextNode("No issues on sonar, have a cookie :)");
+    } else if (issueNumber > 0) {
         spanIcon.className = reprove;
         a.setAttribute("style", "color:#E53C17");
         text = document.createTextNode(issueNumber+" sonarqube issue(s)");
+    } else if(issueNumber == null) {
+        spanIcon.className = info;
+        text = document.createTextNode("Click here to login on sonar");
+        a.setAttribute("title", "To view your sonar issues here you need to be logged in on sonarqube");
+        a.setAttribute("data-toggle", "tooltip");
     }
     var span = document.createElement("SPAN");
     span.appendChild(text);

@@ -7,8 +7,7 @@
         "128": "icons/sonar128.png"
     },
     "browser_action": {
-        "default_icon": "icons/sonar19.png",
-        "default_popup": "popup.html"
+        "default_icon": "icons/sonar19.png"
     },
     "permissions": [
         "http://192.168.45.49:7990/*",
