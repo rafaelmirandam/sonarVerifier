@@ -74,7 +74,7 @@ function insertTag(issueNumber) {
     } else if(issueNumber == null) {
         spanIcon.className = info;
         text = document.createTextNode("Click here to login on sonar");
-        a.setAttribute("title", "To view your sonar issues here you need to be logged in on sonarqube");
+        a.setAttribute("title", "To view your sonar issues here you need to sign in on sonarqube and return to this page");
         a.setAttribute("data-toggle", "tooltip");
     }
     var span = document.createElement("SPAN");
