@@ -14,7 +14,7 @@ cors.onHeadersReceived = ({responseHeaders}) => {
     else {
       responseHeaders.push({
         'name': 'Access-Control-Allow-Origin',
-        'value': '*'
+        'value': 'http://192.168.45.49:7990/'
       });
     }
   }
