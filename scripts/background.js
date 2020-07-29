@@ -1,7 +1,7 @@
 'use strict';
 
 const prefs = {
-  'overwrite-origin': true,
+  'overwrite-origin': true
 };
 
 const cors = {};
@@ -16,7 +16,7 @@ cors.onHeadersReceived = ({responseHeaders}) => {
         'name': 'Access-Control-Allow-Origin',
         'value': 'http://192.168.45.49:7990/'
       });
-    }
+    }   
   }
   return {responseHeaders};
 };

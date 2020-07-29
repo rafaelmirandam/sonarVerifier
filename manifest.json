@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Sonar Verifier",
     "description": "Sonar Verifier by Miranda",
-    "version":"1.0.4",
+    "version":"1.0.6",
     "icons": {
         "128": "icons/sonar128.png"
     },
@@ -20,7 +20,8 @@
     "content_scripts": [
         {
           "matches": [
-            "http://192.168.45.49:7990/projects/NEXT/repos/*/pull-requests/*/overview"
+            "http://192.168.45.49:7990/projects/NEXT/repos/*/pull-requests/*/overview",
+            "http://192.168.45.49:7990/projects/PO/repos/*/pull-requests/*/overview"
           ],
           "js": ["scripts/content.js"]
         }
@@ -29,5 +30,5 @@
         "scripts": [
           "scripts/background.js"
         ]
-      }
+    }
 }
